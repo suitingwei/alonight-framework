@@ -1,0 +1,15 @@
+{
+  "name": "sui/alonight",
+  "description": "Try to be a PHP framework.",
+  "type": "Project.",
+  "authors": [
+    {
+      "name": "sui",
+      "email": "suitingwei@163.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {"Kernel\\": "kernel/"}
+  },
+  "require": {}
+}
