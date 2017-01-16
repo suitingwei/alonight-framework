@@ -9,7 +9,10 @@
     }
   ],
   "autoload": {
-    "psr-4": {"Kernel\\": "kernel/"}
+    "psr-4": {
+      "Kernel\\": "kernel/",
+      "App\\": "app/"
+    }
   },
   "require": {}
 }

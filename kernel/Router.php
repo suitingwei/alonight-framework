@@ -1,33 +1,27 @@
 <?php
 namespace Kernel;
 
+
 /**
  * Class Route
  * @package Kernel\Route
  */
-class Route
+class Router
 {
-    /**
-     *
-     */
-    const METHOD_GET = 'GET';
-    /**
-     *
-     */
-    const METHOD_POST = 'POST';
-    /**
-     *
-     */
-    const METHOD_PUT = 'PUT';
-    /**
-     *
-     */
+    const METHOD_GET    = 'GET';
+    const METHOD_POST   = 'POST';
+    const METHOD_PUT    = 'PUT';
     const METHOD_DELETE = 'DELETE';
 
     /**
      * @var array
      */
     private $routes = [];
+
+    public function __construct()
+    {
+    }
+
 
     /**
      * Register a get route.
@@ -95,7 +89,22 @@ class Route
             return $handle();
         }
 
+        list($controller, $method) = $this->getHandlerControllerAndMethod($handle);
 
+        return (new $controller)->$method();
+    }
+
+    /**
+     * Get the class of the handler controller.
+     */
+    private function getHandlerControllerAndMethod($handlerClass)
+    {
+        list($controller, $method) = explode('@', $handlerClass);
+
+        //TODO  use the config file.
+        $controller = '\\App\\http\\controllers\\' . $controller;
+
+        return [$controller, $method];
     }
 
 }

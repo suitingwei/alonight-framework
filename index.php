@@ -1,19 +1,9 @@
 <?php
 require './vendor/autoload.php';
 
-use Kernel\Request;
-use Kernel\Route;
+//IOC Container
+$container = new Kernel\Container();
 
-$request = new Request();
-
-$route = new Route();
-
-$route->get('/',function(){
-    return 'asd';
-});
-$route->get('welcome',function(){
-    return 'welcome page';
-});
-
-echo $route->handle($request);
+//resolve request
+echo $container->resloveInstance('router')->handle(new Kernel\Request());
 
