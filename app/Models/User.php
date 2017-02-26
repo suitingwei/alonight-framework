@@ -9,5 +9,4 @@ use Kernel\Database\Model;
  */
 class User extends Model
 {
-
 }

@@ -15,11 +15,6 @@ class HomeController
      */
     public function index()
     {
-        $userModel = new User();
-        $results = ($userModel->all());
-        var_dump($results);
-        foreach ($results as $row) {
-            var_dump($row);
-        }
+        return User::all();
     }
 }

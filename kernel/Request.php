@@ -1,6 +1,10 @@
 <?php
 namespace Kernel;
 
+/**
+ * Class Request
+ * @package Kernel
+ */
 class Request
 {
     /**

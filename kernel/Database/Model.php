@@ -49,7 +49,10 @@ DSN;
     }
 
     /**
+     * @param $method
+     * @param $parameters
      *
+     * @return
      */
     public static function __callStatic($method, $parameters)
     {
@@ -60,11 +63,13 @@ DSN;
         return static::$instance->$method($parameters);
     }
 
-
+    /**
+     * @return array
+     */
     public function all()
     {
         $statement = $this->connection->query("select * from users");
 
-        return $statement->fetchAll(\PDO::FETCH_CLASS,'stdClass');
+        return $statement->fetchAll(\PDO::FETCH_CLASS, 'stdClass');
     }
 }

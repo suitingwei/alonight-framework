@@ -8,14 +8,12 @@
 
 namespace Kernel\Utils;
 
-
 /**
  * Class StringUtil
  * @package Kernel\Database
  */
 class StringUtil
 {
-
     /**
      * @param $string
      * @param $delimeter

@@ -2,8 +2,8 @@
 require './vendor/autoload.php';
 
 //IOC Container
-$container = new Kernel\Container();
+$container = new \Kernel\Container();
 
 //resolve request
-echo $container->resloveInstance('router')->handle(new Kernel\Request());
+echo $container->resloveInstance('router')->handle(new \Kernel\Request());
 

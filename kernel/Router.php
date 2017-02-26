@@ -22,7 +22,6 @@ class Router
     {
     }
 
-
     /**
      * Register a get route.
      *
@@ -80,9 +79,16 @@ class Router
      * Handle the http request.
      *
      * @param Request $request
+     *
+     * @return mixed
+     * @throws \Exception
      */
     public function handle(Request $request)
     {
+        if(!isset($this->routes[$request->method()][$request->uri()])){
+            throw new \Exception("Route Not Found! \n Method:{$request->method()} Uri:{$request->uri()} not exists");
+        }
+
         $handle = $this->routes[$request->method()][$request->uri()];
 
         if ($handle instanceof \Closure) {
@@ -96,6 +102,10 @@ class Router
 
     /**
      * Get the class of the handler controller.
+     *
+     * @param $handlerClass
+     *
+     * @return array
      */
     private function getHandlerControllerAndMethod($handlerClass)
     {
