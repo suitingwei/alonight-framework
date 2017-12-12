@@ -1,10 +1,13 @@
 <?php
+
 namespace Kernel;
 
 use App\Exceptions\Handler;
 use ArrayAccess;
+use Kernel\Bootstrap\Logger;
 use Kernel\Exceptions\InstanceAlreadyBoundException;
 use Kernel\Exceptions\InstanceNotFoundException;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Class Container
@@ -12,16 +15,27 @@ use Kernel\Exceptions\InstanceNotFoundException;
  */
 class Container implements ArrayAccess
 {
+    private static $containerInstance = null;
+
     /**
      * @var array
      */
     private $instances = [];
+
+    private $basePath = '';
+    private $kernelPath = '';
+    private $configPath = '';
+
+    private $configures = [];
 
     /**
      * Container constructor.
      */
     public function __construct()
     {
+        $this->registerPaths();
+        $this->loadConfigureFiles();
+        $this->registerHelpers();
         $this->registerRouter();
         $this->registerExceptionHandler();
     }
@@ -49,6 +63,15 @@ class Container implements ArrayAccess
         }
 
         $this->instances[$abstract] = $instance;
+    }
+
+    public static function getInstance()
+    {
+        if (is_null(static::$containerInstance)) {
+            return static::$containerInstance = new static();
+        }
+
+        return static::$containerInstance;
     }
 
     /**
@@ -130,7 +153,7 @@ class Container implements ArrayAccess
      * @param mixed $offset <p>
      *                      The offset to assign the value to.
      *                      </p>
-     * @param mixed $value  <p>
+     * @param mixed $value <p>
      *                      The value to set.
      *                      </p>
      *
@@ -157,4 +180,42 @@ class Container implements ArrayAccess
     {
         // TODO: Implement offsetUnset() method.
     }
+
+    private function registerPaths()
+    {
+        Logger::log('Register paths successfully...');
+        $this->basePath = realpath(__DIR__ . '/../');
+        $this->configPath = realpath(__DIR__ . '/../config');
+        $this->kernelPath = realpath(__DIR__ . '/../kernel');
+    }
+
+    private function registerHelpers()
+    {
+        require $this->kernelPath . '/helpers.php';
+    }
+
+    public function getBasePath()
+    {
+        return $this->basePath;
+    }
+
+    public function getKernelPath()
+    {
+        return $this->kernelPath;
+    }
+
+    public function getConfigPath()
+    {
+        return $this->configPath;
+    }
+
+    private function loadConfigureFiles()
+    {
+        foreach (Finder::create()->files()->in($this->configPath) as $file) {
+
+        }
+
+    }
+
+
 }

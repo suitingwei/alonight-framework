@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sui
- * Date: 2017/11/2
- * Time: 12:53
- */
 
 namespace Kernel\Bootstrap;
 
@@ -12,4 +6,9 @@ namespace Kernel\Bootstrap;
 class Logger
 {
 
+    public static function log($msg)
+    {
+        if(env())
+       echo $msg;
+    }
 }

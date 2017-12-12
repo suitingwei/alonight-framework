@@ -13,6 +13,6 @@ class Config
      */
     public static function getConnectionDsn()
     {
-        return (require  __DIR__.'/../../app/config/database.php');
+        return (require __DIR__ . '/../../app/config/database.php');
     }
 }
