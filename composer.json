@@ -15,6 +15,7 @@
     }
   },
   "require": {
-    "symfony/finder": "^3.3"
+    "symfony/finder": "^3.3",
+    "ext-pdo": "*"
   }
 }

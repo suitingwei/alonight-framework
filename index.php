@@ -7,11 +7,7 @@ require './vendor/autoload.php';
 //resolve request
 //echo $container->resloveInstance('router')->handle(new \Kernel\Request());
 
-class User extends \Kernel\Database\Model
-{
-    protected $tableName = 'users';
-    
-}
+//\Kernel\Log\Logger::info('info message from index.php');
 
 
 fetchFromORM();

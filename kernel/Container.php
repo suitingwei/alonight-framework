@@ -2,12 +2,11 @@
 
 namespace Kernel;
 
-use App\Exceptions\Handler;
 use ArrayAccess;
-use Kernel\Bootstrap\Logger;
+use Kernel\Error\ErrorHandler;
 use Kernel\Exceptions\InstanceAlreadyBoundException;
 use Kernel\Exceptions\InstanceNotFoundException;
-use Symfony\Component\Finder\Finder;
+use Kernel\Log\Logger;
 
 /**
  * Class Container
@@ -22,7 +21,7 @@ class Container implements ArrayAccess
      */
     private $instances = [];
 
-    private $basePath = '';
+    private $basePath   = '';
     private $kernelPath = '';
     private $configPath = '';
 
@@ -30,6 +29,7 @@ class Container implements ArrayAccess
 
     /**
      * Container constructor.
+     * @throws InstanceAlreadyBoundException
      */
     public function __construct()
     {
@@ -100,15 +100,16 @@ class Container implements ArrayAccess
     }
 
     /**
-     *
+     * 绑定异常处理器
+     * @throws InstanceAlreadyBoundException
      */
     public function registerExceptionHandler()
     {
-        $handler = new Handler();
+        $handler = new ErrorHandler();
         $this->bindInstance('exception.handler', $handler);
 
         set_exception_handler([$handler, 'handleException']);
-//        set_error_handler([$handler, 'handleError']);
+        set_error_handler([$handler, 'handleError']);
     }
 
     /**
@@ -183,8 +184,8 @@ class Container implements ArrayAccess
 
     private function registerPaths()
     {
-        Logger::log('Register paths successfully...');
-        $this->basePath = realpath(__DIR__ . '/../');
+        Logger::info('Register paths successfully...');
+        $this->basePath   = realpath(__DIR__ . '/../');
         $this->configPath = realpath(__DIR__ . '/../config');
         $this->kernelPath = realpath(__DIR__ . '/../kernel');
     }
@@ -211,9 +212,6 @@ class Container implements ArrayAccess
 
     private function loadConfigureFiles()
     {
-        foreach (Finder::create()->files()->in($this->configPath) as $file) {
-
-        }
 
     }
 
