@@ -4,6 +4,9 @@ require './vendor/autoload.php';
 //IOC Container
 try {
     $container = new \Kernel\Container();
+    $rateLimiter = new \kernel\Http\RateLimiters\SimpleCounter();
+    
+    $rateLimiter->canProcess();
 } catch (\Kernel\Exceptions\InstanceAlreadyBoundException $e) {
     die($e) ;
 }
