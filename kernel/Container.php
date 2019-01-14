@@ -33,11 +33,12 @@ class Container implements ArrayAccess
      */
     public function __construct()
     {
+        //必须先注册ErrorHandling，必然可能随后框架启动中的错误信息都会找不到
+        $this->registerExceptionHandler();
         $this->registerPaths();
         $this->loadConfigureFiles();
         $this->registerHelpers();
         $this->registerRouter();
-        $this->registerExceptionHandler();
     }
 
     /**

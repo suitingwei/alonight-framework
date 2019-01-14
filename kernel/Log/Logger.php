@@ -2,8 +2,9 @@
 
 namespace Kernel\Log;
 
-use kernel\Log\Handlers\BaseHandler;
-use kernel\Log\Handlers\FileHandler;
+use Kernel\Log\Handlers\BaseHandler;
+use Kernel\Log\Handlers\DatabaseHandler;
+use Kernel\Log\Handlers\FileHandler;
 
 class Logger
 {
@@ -24,7 +25,8 @@ class Logger
      * @var array
      */
     protected $handlers= [
-        FileHandler::class
+        FileHandler::class,
+        DataBaseHandler::class,
     ];
 
     /**
@@ -40,17 +42,24 @@ class Logger
 
     public function __construct()
     {
-        foreach ($this->handlers as $handler) {
-
+        $handlers = $this->handlers;
+        $this->handlers = [];
+        foreach ($handlers as  $handlerClass) {
+            new nasoidn();
+            $this->handlers[] = new $handlerClass;
         }
         register_shutdown_function(function(){
+            $err = error_get_last();
             $this->flush();
         });
     }
-
+    
     /**
      * @param string $string
      * @param string $category
+     
+     *
+     * @return bool
      */
     public static function info(string $string,string $category='application')
     {
